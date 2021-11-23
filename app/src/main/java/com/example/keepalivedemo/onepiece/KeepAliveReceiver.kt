@@ -15,11 +15,11 @@ class KeepAliveReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {
             Intent.ACTION_SCREEN_OFF -> {
-                Log.d(OnePieceActivity.TAG, "屏幕关闭，准备拉起OnePieceActivity")
+                Log.i(OnePieceActivity.TAG, "屏幕关闭，准备拉起OnePieceActivity")
                 KeepAliveManager.instance.startOnePieceActivity(context)
             }
             Intent.ACTION_SCREEN_ON -> {
-                Log.d(OnePieceActivity.TAG, "屏幕开启，准备关闭OnePieceActivity")
+                Log.i(OnePieceActivity.TAG, "屏幕开启，准备关闭OnePieceActivity")
                 KeepAliveManager.instance.finishOnePieceActivity()
             }
         }

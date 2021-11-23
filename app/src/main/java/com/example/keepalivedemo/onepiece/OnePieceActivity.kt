@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 class OnePieceActivity : AppCompatActivity() {
 
     companion object {
-        const val TAG = "OnePieceActivity"
+        const val TAG = "OnePieceKeepLive"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -27,9 +27,8 @@
             android:name=".onepiece.OnePieceActivity"
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="false"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:theme="@style/OnePieceTheme" />
 
     </application>
-
 </manifest>

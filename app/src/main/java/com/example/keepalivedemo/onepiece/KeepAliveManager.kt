@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
-import com.example.keepalivedemo.onepiece.OnePieceActivity
 import java.lang.ref.WeakReference
 
 /**
@@ -30,6 +29,7 @@ class KeepAliveManager {
      */
     fun startOnePieceActivity(context: Context?) {
         val intent = Intent(context, OnePieceActivity::class.java)
+        Log.i(OnePieceActivity.TAG, "${context == null}")
         context?.startActivity(intent)
     }
 
@@ -44,7 +44,7 @@ class KeepAliveManager {
      * 注册广播
      */
     fun registerKeepLiveReceiver(context: Context?) {
-        Log.d(OnePieceActivity.TAG, "KeepAliveReceiver已注册")
+        Log.i(OnePieceActivity.TAG, "KeepAliveReceiver已注册")
         receiver = KeepAliveReceiver()
         val filter = IntentFilter()
         filter.addAction(Intent.ACTION_SCREEN_OFF)
@@ -56,7 +56,7 @@ class KeepAliveManager {
      * 注销广播
      */
     fun unregisterKeepLiveReceiver(context: Context?) {
-        Log.d(OnePieceActivity.TAG, "KeepAliveReceiver已注销")
+        Log.i(OnePieceActivity.TAG, "KeepAliveReceiver已注销")
         receiver?.let {
             context?.unregisterReceiver(it)
         }

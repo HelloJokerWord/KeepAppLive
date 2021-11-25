@@ -1,9 +1,11 @@
 package com.example.keepalivedemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.keepalivedemo.onepiece.KeepAliveManager
+import com.example.keepalivedemo.service.ForegroundService
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,12 +13,19 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "MainActivity"
     }
 
+    private var foregroundIntent: Intent? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.i(TAG,"onCreate")
 
-        KeepAliveManager.instance.registerKeepLiveReceiver(this)
+        //像素保活注册
+        //KeepAliveManager.instance.registerKeepLiveReceiver(this)
+
+        //替罪羊服务保活开启
+        foregroundIntent = Intent(this, ForegroundService::class.java)
+        startService(foregroundIntent)
     }
 
     override fun onStart() {
@@ -46,7 +55,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         Log.i(TAG,"onDestroy")
-        KeepAliveManager.instance.unregisterKeepLiveReceiver(this)
+        //像素保活注销
+        //KeepAliveManager.instance.unregisterKeepLiveReceiver(this)
+
+        //替罪羊服务保活关闭
+        stopService(foregroundIntent)
+
         super.onDestroy()
     }
 

@@ -6,8 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.keepalivedemo.oneprocess.OneProcessService
-import com.example.keepalivedemo.oneprocess.SharedPreferenceTool
+import com.example.keepalivedemo.aidlservice.LocalService
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,11 +16,9 @@ class MainActivity : AppCompatActivity() {
 
         /**
          * 判断某个Service是否在运行
-         * @param context
          * @param serviceClass 需要查看的Service的Class
-         * @return
          */
-        fun isServiceRunning(context: Context, serviceClass: Class<OneProcessService>): Boolean {
+        fun <T> isServiceRunning(context: Context, serviceClass: Class<T>): Boolean {
             val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             activityManager.getRunningServices(Int.MAX_VALUE).forEach { if (serviceClass.name == it.service.className) return true }
             return false
@@ -31,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private var foregroundIntent: Intent? = null
 
     private var oneProcessService: Intent? = null
+
+    private var aidlIntent: Intent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +44,17 @@ class MainActivity : AppCompatActivity() {
         //startService(foregroundIntent)
 
         //单进程广播保活
-        if (!isServiceRunning(applicationContext, OneProcessService::class.java)) {
-            Log.i(TAG, "检测到服务未在运行,启动服务")
-            oneProcessService = Intent(this, OneProcessService::class.java)
-            startService(oneProcessService)
-        } else {
-            Log.i(TAG, "检测到服务正在运行,无需再次启动")
-        }
+        //if (!isServiceRunning(applicationContext, OneProcessService::class.java)) {
+        //    Log.i(TAG, "检测到服务未在运行,启动服务")
+        //    oneProcessService = Intent(this, OneProcessService::class.java)
+        //    startService(oneProcessService)
+        //} else {
+        //    Log.i(TAG, "检测到服务正在运行,无需再次启动")
+        //}
 
+        //AIDL双进程保活
+        aidlIntent = Intent(this, LocalService::class.java)
+        startService(aidlIntent)
     }
 
     override fun onStart() {
@@ -89,8 +91,11 @@ class MainActivity : AppCompatActivity() {
         //foregroundIntent?.let { stopService(it) }
 
         //单进程广播保活关闭
-        oneProcessService?.let { stopService(it) }
-        SharedPreferenceTool.instance.putInt(OneProcessService.KEY_COUNT, OneProcessService.count)
+        //oneProcessService?.let { stopService(it) }
+        //SharedPreferenceTool.instance.putInt(OneProcessService.KEY_COUNT, OneProcessService.count)
+
+        //AIDL双进程保活关闭
+
 
         super.onDestroy()
     }

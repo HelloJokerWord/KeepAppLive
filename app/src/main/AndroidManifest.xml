@@ -54,6 +54,17 @@
             android:enabled="true"
             android:exported="true" />
 
+        <!-- 进程名remote，冒号开头表示私有进程 -->
+        <service
+            android:name=".aidlservice.RemoteService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <service
+            android:name=".aidlservice.LocalService"
+            android:enabled="true"
+            android:exported="true" />
 
     </application>
 </manifest>

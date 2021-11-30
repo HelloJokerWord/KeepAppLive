@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.keepalivedemo.aidlservice.LocalService
+import com.example.keepalivedemo.ndkservice.WorkService
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,10 +26,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var foregroundIntent: Intent? = null
-
     private var oneProcessService: Intent? = null
-
     private var aidlIntent: Intent? = null
+    private var ndkIntent: Intent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +52,12 @@ class MainActivity : AppCompatActivity() {
         //}
 
         //AIDL双进程保活
-        aidlIntent = Intent(this, LocalService::class.java)
-        startService(aidlIntent)
+        //aidlIntent = Intent(this, LocalService::class.java)
+        //startService(aidlIntent)
+
+        //NDK双进程保活
+        ndkIntent = Intent(this,WorkService::class.java)
+        startService(ndkIntent)
     }
 
     override fun onStart() {
@@ -96,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         //AIDL双进程保活关闭
 
+        //NDK双进程保活关闭
 
         super.onDestroy()
     }

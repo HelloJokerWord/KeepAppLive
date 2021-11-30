@@ -66,5 +66,9 @@
             android:enabled="true"
             android:exported="true" />
 
+        <service
+            android:name=".ndkservice.WorkService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 </manifest>
